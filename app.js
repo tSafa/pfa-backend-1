@@ -1,23 +1,41 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const connectDB = require('./config'); // Assurez-vous que le chemin d'accès au fichier est correct
 const phone = require('./router/phoneRouter'); // Assurez-vous que le chemin d'accès au fichier est correct
 const computer = require('./router/computerRouter');
 const appliance = require('./router/applianceRouter');
 const app = express();
 
-// Connexion à la base de données MongoDB
-mongoose.connect('mongodb://localhost:27017/mydatabase', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('Error connecting to MongoDB:', err));
-
+// Connect to MongoDB
+connectDB();
+mongoose.connect('mongodb://localhost:27017/shop', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => {
+    console.log("Connected to MongoDB");
+})
+.catch((error) => {
+    console.error("MongoDB connection error:", error);
+});
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
-// Routes
-app.use('/phones', phone); // Utilisez le routeur pour les téléphones
+const Phones = require ('./models/Phone');
+
+const phoneRouter=require('./router/phoneRouter');
+
+
+
+
+
+
+app.use('/phones', phoneRouter);
 app.use('/computers', computer);
-app.use('/computers', appliances);
+app.use('/appliances', appliance);
+
 // Port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

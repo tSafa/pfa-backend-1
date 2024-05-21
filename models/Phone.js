@@ -14,17 +14,9 @@ const phoneSchema = new Schema({
     type: String,
     required: true
   },
-  validFrom: {
+  image: {
     type: String,
-    required: true
-  },
-  validUntil: {
-    type: String,
-    required: true
-  },
-  imageURL: {
-    type: String,
-    required: true
+    required: false // Le champ image peut être optionnel
   }
 });
 

@@ -14,18 +14,10 @@ const applianceSchema = new Schema({
     type: String,
     required: true
   },
-  validFrom: {
-    type: Date,
-    required: true
-  },
-  validUntil: {
-    type: Date,
-    required: true
-  },
-  imageURL: {
+ 
+  image: {
     type: String,
-    required: true
+    required: false // Le champ image peut être optionnel
   }
 });
-
 module.exports = mongoose.model('appliance', applianceSchema);
